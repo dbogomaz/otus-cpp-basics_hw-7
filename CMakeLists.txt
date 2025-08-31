@@ -33,6 +33,7 @@ set_target_properties(${PROJECT_NAME}_test PROPERTIES
 target_include_directories(${PROJECT_NAME}_test PRIVATE 
     ${PROJECT_SOURCE_DIR}/googletest/googletest/include
     ${PROJECT_SOURCE_DIR}/googletest/googlemock/include
+    ${PROJECT_SOURCE_DIR}/src
 )
 
 # Линковка тестов с gtest и gtest_main
