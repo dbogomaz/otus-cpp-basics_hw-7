@@ -14,3 +14,33 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     CXX_EXTENSIONS OFF
 )
 
+# Подключение GoogleTest
+add_subdirectory(googletest)
+
+set(TEST_SOURCE 
+    tests/containertest.cpp
+)
+
+add_executable(${PROJECT_NAME}_test ${TEST_SOURCE})
+
+set_target_properties(${PROJECT_NAME}_test PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS OFF
+)
+
+# Подключение заголовочных файлов googletest и googlemock
+target_include_directories(${PROJECT_NAME}_test PRIVATE 
+    ${PROJECT_SOURCE_DIR}/googletest/googletest/include
+    ${PROJECT_SOURCE_DIR}/googletest/googlemock/include
+)
+
+# Линковка тестов с gtest и gtest_main
+target_link_libraries(${PROJECT_NAME}_test PRIVATE 
+    gtest
+    gtest_main
+)
+
+# Добавление тестов в CMake
+enable_testing()
+add_test(NAME MyContainersTest COMMAND ${PROJECT_NAME}_test)
