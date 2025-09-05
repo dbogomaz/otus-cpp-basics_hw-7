@@ -18,7 +18,9 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 add_subdirectory(googletest)
 
 set(TEST_SOURCE 
-    tests/containertest.cpp
+    tests/myvector_tests.cpp
+    tests/mylist1_tests.cpp
+    tests/mylist2_tests.cpp
 )
 
 add_executable(${PROJECT_NAME}_test ${TEST_SOURCE})
@@ -38,7 +40,7 @@ target_include_directories(${PROJECT_NAME}_test PRIVATE
 
 # Линковка тестов с gtest и gtest_main
 target_link_libraries(${PROJECT_NAME}_test PRIVATE 
-    gtest
+    #gtest
     gtest_main
 )
 
