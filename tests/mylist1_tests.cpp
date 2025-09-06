@@ -1,6 +1,9 @@
 // @file mylist1_tests.cpp
 #include <gtest/gtest.h>
-#include "mylist_1/mylist_1.h"
+
+// можно не писать полный путь, если настроены include_directories в CMakeLists.txt
+#include "mylist_1.h"
+// #include "mylist_1/mylist_1.h"
 
 //- создание контейнера
 TEST(MyList1_Test, CreateContainer) {
@@ -27,7 +30,7 @@ TEST(MyList1_Test, InsertAtBeginning) {
 //- вставка элементов в середину
 TEST(MyList1_Test, InsertInMiddle) {
     MyList_1<int> container{1, 2, 4, 5};
-    container.insert(2, 3); // Вставляем 3 на позицию с индексом 2
+    container.insert(2, 3);  // Вставляем 3 на позицию с индексом 2
     EXPECT_EQ(container.size(), 5);
     EXPECT_EQ(container[2], 3);
     EXPECT_EQ(container[3], 4);
@@ -35,7 +38,7 @@ TEST(MyList1_Test, InsertInMiddle) {
 //- удаление элементов из конца
 TEST(MyList1_Test, EraseFromEnd) {
     MyList_1<int> container{1, 2, 3};
-    container.erase(2); // Удаляем элемент с индексом 2
+    container.erase(2);  // Удаляем элемент с индексом 2
     EXPECT_EQ(container.size(), 2);
     EXPECT_EQ(container[0], 1);
     EXPECT_EQ(container[1], 2);
@@ -43,7 +46,7 @@ TEST(MyList1_Test, EraseFromEnd) {
 //- удаление элементов из начала
 TEST(MyList1_Test, EraseFromBeginning) {
     MyList_1<int> container{1, 2, 3};
-    container.erase(0); // Удаляем элемент с индексом 0
+    container.erase(0);  // Удаляем элемент с индексом 0
     EXPECT_EQ(container.size(), 2);
     EXPECT_EQ(container[0], 2);
     EXPECT_EQ(container[1], 3);
@@ -51,7 +54,7 @@ TEST(MyList1_Test, EraseFromBeginning) {
 //- удаление элементов из середины
 TEST(MyList1_Test, EraseFromMiddle) {
     MyList_1<int> container{1, 2, 3, 4, 5};
-    container.erase(2); // Удаляем элемент с индексом 2
+    container.erase(2);  // Удаляем элемент с индексом 2
     EXPECT_EQ(container.size(), 4);
     EXPECT_EQ(container[0], 1);
     EXPECT_EQ(container[1], 2);

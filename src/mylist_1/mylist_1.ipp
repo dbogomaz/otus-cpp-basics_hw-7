@@ -1,7 +1,5 @@
 // @file: mylist_1.ipp
-
 #include <sstream>
-#include <stdexcept>
 
 #include "mylist_1.h"
 
@@ -12,7 +10,7 @@ MyList_1<T>::MyList_1(const size_t size) : m_size{size} {
         m_firstNode = new Node();
         m_lastNode = m_firstNode;
         for (size_t i = 1; i < m_size; i++) {
-            Node *newNode = new Node();
+            Node* newNode = new Node();
             m_lastNode->next = newNode;
             m_lastNode = newNode;
         }
@@ -29,7 +27,7 @@ MyList_1<T>::MyList_1(const std::initializer_list<T> initList) : m_size{initList
         m_lastNode = m_firstNode;
         ++it;
         for (size_t i = 1; i < m_size; i++) {
-            Node *newNode = new Node();
+            Node* newNode = new Node();
             newNode->data = *it;
             m_lastNode->next = newNode;
             m_lastNode = newNode;
@@ -40,19 +38,19 @@ MyList_1<T>::MyList_1(const std::initializer_list<T> initList) : m_size{initList
 
 // Конструктор копирования
 template <typename T>
-MyList_1<T>::MyList_1(const MyList_1 &other) {
+MyList_1<T>::MyList_1(const MyList_1& other) {
     copyFrom(other);
 }
 
 // Конструктор перемещения
 template <typename T>
-MyList_1<T>::MyList_1(MyList_1 &&other) noexcept {
+MyList_1<T>::MyList_1(MyList_1&& other) noexcept {
     moveFrom(std::move(other));
 }
 
 // Оператор присваивания копированием
 template <typename T>
-MyList_1<T> &MyList_1<T>::operator=(const MyList_1 &other) {
+MyList_1<T>& MyList_1<T>::operator=(const MyList_1& other) {
     if (this != &other) {
         clear();
         copyFrom(other);
@@ -62,7 +60,7 @@ MyList_1<T> &MyList_1<T>::operator=(const MyList_1 &other) {
 
 // Оператор присваивания перемещением
 template <typename T>
-MyList_1<T> &MyList_1<T>::operator=(MyList_1 &&other) noexcept {
+MyList_1<T>& MyList_1<T>::operator=(MyList_1&& other) noexcept {
     if (this != &other) {
         clear();
         moveFrom(std::move(other));
@@ -72,7 +70,7 @@ MyList_1<T> &MyList_1<T>::operator=(MyList_1 &&other) noexcept {
 
 // Операторы сравнения
 template <typename T>
-bool MyList_1<T>::operator==(const MyList_1 &other) const {
+bool MyList_1<T>::operator==(const MyList_1& other) const {
     // Если оба списка пустые - они равны
     if (m_size == 0 && other.m_size == 0) return true;
 
@@ -80,8 +78,8 @@ bool MyList_1<T>::operator==(const MyList_1 &other) const {
     if (m_size != other.m_size) return false;
 
     // Сравнение по элементам
-    Node *a = m_firstNode;
-    Node *b = other.m_firstNode;
+    Node* a = m_firstNode;
+    Node* b = other.m_firstNode;
     while (a && b) {
         if (a->data != b->data) return false;
         a = a->next;
@@ -91,7 +89,7 @@ bool MyList_1<T>::operator==(const MyList_1 &other) const {
 }
 
 template <typename T>
-bool MyList_1<T>::operator!=(const MyList_1 &other) const {
+bool MyList_1<T>::operator!=(const MyList_1& other) const {
     return !(*this == other);
 }
 
@@ -104,8 +102,8 @@ MyList_1<T>::~MyList_1() {
 // --- Методы изменения списка ---
 
 template <typename T>
-void MyList_1<T>::push_back(const T &value) {
-    Node *newNode = new Node();
+void MyList_1<T>::push_back(const T& value) {
+    Node* newNode = new Node();
     newNode->data = value;
     if (m_size == 0) {
         m_firstNode = newNode;
@@ -118,20 +116,20 @@ void MyList_1<T>::push_back(const T &value) {
 }
 
 template <typename T>
-void MyList_1<T>::insert(const size_t index, const T &value) {
+void MyList_1<T>::insert(const size_t index, const T& value) {
     if (index == m_size) {
         push_back(value);
         return;
     }
     checkIndex(index, "insert");
-    Node *newNode = new Node();
+    Node* newNode = new Node();
     newNode->data = value;
     // вставка в начало
     if (index == 0) {
         newNode->next = m_firstNode;
         m_firstNode = newNode;
     } else {
-        Node *prev = m_firstNode;
+        Node* prev = m_firstNode;
         for (size_t i = 0; i < index - 1; ++i) {
             prev = prev->next;
         }
@@ -144,7 +142,7 @@ void MyList_1<T>::insert(const size_t index, const T &value) {
 template <typename T>
 void MyList_1<T>::erase(const size_t index) {
     checkIndex(index, "erase");
-    Node *toDelete = nullptr;
+    Node* toDelete = nullptr;
     if (index == 0) {
         // Удаление первого элемента
         toDelete = m_firstNode;
@@ -155,7 +153,7 @@ void MyList_1<T>::erase(const size_t index) {
         }
     } else {
         // Поиск узла, предшествующего удаляемому
-        Node *prev = m_firstNode;
+        Node* prev = m_firstNode;
         for (size_t i = 0; i < index - 1; ++i) {
             prev = prev->next;
         }
@@ -171,9 +169,9 @@ void MyList_1<T>::erase(const size_t index) {
 
 template <typename T>
 void MyList_1<T>::clear() {
-    Node *current = m_firstNode;
+    Node* current = m_firstNode;
     while (current != nullptr) {
-        Node *nextNode = current->next;
+        Node* nextNode = current->next;
         delete current;
         current = nextNode;
     }
@@ -192,9 +190,9 @@ size_t MyList_1<T>::size() const {
 // --- Методы доступа к элементам ---
 
 template <typename T>
-T &MyList_1<T>::at(const size_t index) {
+T& MyList_1<T>::at(const size_t index) {
     checkIndex(index, "at");
-    Node *current = m_firstNode;
+    Node* current = m_firstNode;
     for (size_t i = 0; i < index; ++i) {
         current = current->next;
     }
@@ -202,9 +200,9 @@ T &MyList_1<T>::at(const size_t index) {
 }
 
 template <typename T>
-const T &MyList_1<T>::at(size_t index) const {
+const T& MyList_1<T>::at(size_t index) const {
     checkIndex(index, "at");
-    Node *current = m_firstNode;
+    Node* current = m_firstNode;
     for (size_t i = 0; i < index; ++i) {
         current = current->next;
     }
@@ -212,12 +210,12 @@ const T &MyList_1<T>::at(size_t index) const {
 }
 
 template <typename T>
-T &MyList_1<T>::operator[](const size_t index) {
+T& MyList_1<T>::operator[](const size_t index) {
     return at(index);
 }
 
 template <typename T>
-const T &MyList_1<T>::operator[](const size_t index) const {
+const T& MyList_1<T>::operator[](const size_t index) const {
     return at(index);
 }
 
@@ -245,7 +243,7 @@ typename MyList_1<T>::const_iterator MyList_1<T>::end() const noexcept {
 
 template <typename T>
 void MyList_1<T>::print() const {
-    Node *current = m_firstNode;
+    Node* current = m_firstNode;
     size_t index = 0;
     std::cout << "=== List Contents ===" << std::endl;
     std::cout << " Size: " << m_size << std::endl;
@@ -265,16 +263,16 @@ void MyList_1<T>::print() const {
 // --- Приватные методы ---
 
 template <typename T>
-void MyList_1<T>::copyFrom(const MyList_1 &other) {
+void MyList_1<T>::copyFrom(const MyList_1& other) {
     clear();
     if (other.m_size > 0) {
-        Node *it = other.m_firstNode;
+        Node* it = other.m_firstNode;
         m_firstNode = new Node();
         m_firstNode->data = it->data;
         m_lastNode = m_firstNode;
         it = it->next;
         for (size_t i = 1; i < other.m_size; i++) {
-            Node *newNode = new Node();
+            Node* newNode = new Node();
             newNode->data = it->data;
             m_lastNode->next = newNode;
             m_lastNode = newNode;
@@ -286,7 +284,7 @@ void MyList_1<T>::copyFrom(const MyList_1 &other) {
 }
 
 template <typename T>
-void MyList_1<T>::moveFrom(MyList_1 &&other) noexcept {
+void MyList_1<T>::moveFrom(MyList_1&& other) noexcept {
     clear();
     m_size = other.m_size;
     m_firstNode = other.m_firstNode;
@@ -297,7 +295,7 @@ void MyList_1<T>::moveFrom(MyList_1 &&other) noexcept {
 }
 
 template <typename T>
-void MyList_1<T>::checkIndex(const size_t index, const char *function_name) const {
+void MyList_1<T>::checkIndex(const size_t index, const char* function_name) const {
     if (index >= m_size) {
         std::ostringstream oss;
         oss << "MyList_1::" << function_name << "(): index " << index
@@ -309,20 +307,20 @@ void MyList_1<T>::checkIndex(const size_t index, const char *function_name) cons
 // --- Реализация методов iterator ---
 
 template <typename T>
-MyList_1<T>::iterator::iterator(Node *node) : m_node(node) {}
+MyList_1<T>::iterator::iterator(Node* node) : m_node(node) {}
 
 template <typename T>
-T &MyList_1<T>::iterator::operator*() const {
+T& MyList_1<T>::iterator::operator*() const {
     return m_node->data;
 }
 
 template <typename T>
-T *MyList_1<T>::iterator::get() const {
+T* MyList_1<T>::iterator::get() const {
     return &m_node->data;
 }
 
 template <typename T>
-typename MyList_1<T>::iterator &MyList_1<T>::iterator::operator++() {
+typename MyList_1<T>::iterator& MyList_1<T>::iterator::operator++() {
     if (m_node) {
         m_node = m_node->next;
     }
@@ -337,32 +335,32 @@ typename MyList_1<T>::iterator MyList_1<T>::iterator::operator++(int) {
 }
 
 template <typename T>
-bool MyList_1<T>::iterator::operator==(const iterator &other) const {
+bool MyList_1<T>::iterator::operator==(const iterator& other) const {
     return m_node == other.m_node;
 }
 
 template <typename T>
-bool MyList_1<T>::iterator::operator!=(const iterator &other) const {
+bool MyList_1<T>::iterator::operator!=(const iterator& other) const {
     return m_node != other.m_node;
 }
 
 // --- Реализация методов const_iterator ---
 
 template <typename T>
-MyList_1<T>::const_iterator::const_iterator(const Node *node) : m_node(node) {}
+MyList_1<T>::const_iterator::const_iterator(const Node* node) : m_node(node) {}
 
 template <typename T>
-const T &MyList_1<T>::const_iterator::operator*() const {
+const T& MyList_1<T>::const_iterator::operator*() const {
     return m_node->data;
 }
 
 template <typename T>
-const T *MyList_1<T>::const_iterator::get() const {
+const T* MyList_1<T>::const_iterator::get() const {
     return &m_node->data;
 }
 
 template <typename T>
-typename MyList_1<T>::const_iterator &MyList_1<T>::const_iterator::operator++() {
+typename MyList_1<T>::const_iterator& MyList_1<T>::const_iterator::operator++() {
     if (m_node) {
         m_node = m_node->next;
     }
@@ -377,18 +375,18 @@ typename MyList_1<T>::const_iterator MyList_1<T>::const_iterator::operator++(int
 }
 
 template <typename T>
-bool MyList_1<T>::const_iterator::operator==(const const_iterator &other) const {
+bool MyList_1<T>::const_iterator::operator==(const const_iterator& other) const {
     return m_node == other.m_node;
 }
 
 template <typename T>
-bool MyList_1<T>::const_iterator::operator!=(const const_iterator &other) const {
+bool MyList_1<T>::const_iterator::operator!=(const const_iterator& other) const {
     return m_node != other.m_node;
 }
 
 template <typename T>
-std::ostream &operator<<(std::ostream &os, const MyList_1<T> &myList) {
-    for (const auto &item : myList) {
+std::ostream& operator<<(std::ostream& os, const MyList_1<T>& myList) {
+    for (const auto& item : myList) {
         os << item << " ";
     }
     return os;

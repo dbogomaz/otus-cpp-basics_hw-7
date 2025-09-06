@@ -1,6 +1,9 @@
 // @file myvector_tests.cpp
 #include <gtest/gtest.h>
-#include "myvector/myvector.h"
+
+// можно не писать полный путь, если настроены include_directories в CMakeLists.txt
+#include "myvector.h"
+// #include "myvector/myvector.h"
 
 //- создание контейнера
 TEST(MyVector_Test, CreateContainer) {

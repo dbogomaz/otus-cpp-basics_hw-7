@@ -1,13 +1,14 @@
 // @file additional_tests.cpp
 // Дополнительные тесты для проверки контейнеров MyVector, MyList_1 и MyList_2
 #include <gtest/gtest.h>
-#include <iostream>
-#include <initializer_list>
-#include <utility>  // для std::move
 
-#include "mylist_1/mylist_1.h"
-#include "mylist_2/mylist_2.h"
-#include "myvector/myvector.h"
+// можно не писать полный путь, если настроены include_directories в CMakeLists.txt
+#include "mylist_1.h"
+#include "mylist_2.h"
+#include "myvector.h"
+// #include "../src/mylist_1/mylist_1.h"
+// #include "../src/mylist_2/mylist_2.h"
+// #include "../src/myvector/myvector.h"
 
 //**Дополнительное задание 1.**
 // Реализовать `unit-тест` на копирование контейнера.

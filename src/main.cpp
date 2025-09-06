@@ -2,9 +2,11 @@
 #include <cassert>
 #include <iostream>
 
-#include "../src/mylist_1/mylist_1.h"
-#include "../src/mylist_2/mylist_2.h"
-#include "../src/myvector/myvector.h"
+// можно не писать полный путь, если настроены include_directories в CMakeLists.txt
+#include "myvector.h"
+#include "mylist_1.h"
+#include "mylist_2.h"
+
 
 namespace tests {
 

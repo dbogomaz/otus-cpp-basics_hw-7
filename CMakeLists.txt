@@ -14,7 +14,13 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     CXX_EXTENSIONS OFF
 )
 
-# Подключение GoogleTest
+target_include_directories(${PROJECT_NAME} PRIVATE 
+    ${PROJECT_SOURCE_DIR}/src/myvector
+    ${PROJECT_SOURCE_DIR}/src/mylist_1
+    ${PROJECT_SOURCE_DIR}/src/mylist_2
+)
+
+# ********************** Подключение GoogleTest **********************
 add_subdirectory(googletest)
 
 set(TEST_SOURCE 
@@ -32,17 +38,16 @@ set_target_properties(${PROJECT_NAME}_test PROPERTIES
     CXX_EXTENSIONS OFF
 )
 
-# Подключение заголовочных файлов googletest и googlemock
+# Настройка include для тестов чтобы можно было видеть заголовочные файлы
 target_include_directories(${PROJECT_NAME}_test PRIVATE 
-    ${PROJECT_SOURCE_DIR}/googletest/googletest/include
-    ${PROJECT_SOURCE_DIR}/googletest/googlemock/include
-    ${PROJECT_SOURCE_DIR}/src
+    ${PROJECT_SOURCE_DIR}/src/myvector
+    ${PROJECT_SOURCE_DIR}/src/mylist_1
+    ${PROJECT_SOURCE_DIR}/src/mylist_2 
 )
 
-# Линковка тестов с gtest и gtest_main
 target_link_libraries(${PROJECT_NAME}_test PRIVATE 
-    #gtest
-    gtest_main
+    #GTest::gtest
+    GTest::gtest_main
 )
 
 # Добавление тестов в CMake
