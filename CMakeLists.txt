@@ -21,6 +21,7 @@ set(TEST_SOURCE
     tests/myvector_tests.cpp
     tests/mylist1_tests.cpp
     tests/mylist2_tests.cpp
+    tests/additional_tests.cpp
 )
 
 add_executable(${PROJECT_NAME}_test ${TEST_SOURCE})
