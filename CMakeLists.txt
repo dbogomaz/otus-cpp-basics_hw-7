@@ -6,6 +6,12 @@ set(PROJECT_SOURCE
     src/main.cpp
 )
 
+set(PROJECT_INCLUDES
+    ${PROJECT_SOURCE_DIR}/src/myvector
+    ${PROJECT_SOURCE_DIR}/src/mylist_1
+    ${PROJECT_SOURCE_DIR}/src/mylist_2
+)
+
 # ********************** Настройка основного проекта в виде исполняемого файла *************
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCE})
 
@@ -14,14 +20,6 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     CXX_STANDARD_REQUIRED ON
     CXX_EXTENSIONS OFF
 )
-
-# следующий код перенесен в библиотеку ${PROJECT_NAME}_lib
-## Настройка include для библиотеки чтобы можно было видеть заголовочные файлы
-#target_include_directories(${PROJECT_NAME} PRIVATE 
-#    ${PROJECT_SOURCE_DIR}/src/myvector
-#    ${PROJECT_SOURCE_DIR}/src/mylist_1
-#    ${PROJECT_SOURCE_DIR}/src/mylist_2
-#)
 
 # ********************** Настройка основного проекта в виде библиотеки *************
 add_library(${PROJECT_NAME}_lib INTERFACE) # INTERFACE потому что шаблонные классы
@@ -33,11 +31,7 @@ set_target_properties(${PROJECT_NAME}_lib PROPERTIES
 )
 
 # Настройка include для библиотеки чтобы можно было видеть заголовочные файлы
-target_include_directories(${PROJECT_NAME}_lib INTERFACE
-    ${PROJECT_SOURCE_DIR}/src/myvector
-    ${PROJECT_SOURCE_DIR}/src/mylist_1
-    ${PROJECT_SOURCE_DIR}/src/mylist_2
-)
+target_include_directories(${PROJECT_NAME}_lib INTERFACE ${PROJECT_INCLUDES})
 
 # Линковка библиотеки с основным проектом
 target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_lib)
@@ -61,11 +55,7 @@ set_target_properties(${PROJECT_NAME}_test PROPERTIES
 )
 
 # Настройка include для тестов чтобы можно было видеть заголовочные файлы
-target_include_directories(${PROJECT_NAME}_test PRIVATE 
-    ${PROJECT_SOURCE_DIR}/src/myvector
-    ${PROJECT_SOURCE_DIR}/src/mylist_1
-    ${PROJECT_SOURCE_DIR}/src/mylist_2 
-)
+target_include_directories(${PROJECT_NAME}_test PRIVATE ${PROJECT_INCLUDES})
 
 target_link_libraries(${PROJECT_NAME}_test PRIVATE 
     #GTest::gtest
