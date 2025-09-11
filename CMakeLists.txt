@@ -42,10 +42,11 @@ target_link_libraries(${PROJECT_NAME} PRIVATE ${LIB_NAME})
 add_subdirectory(googletest)
 
 set(TEST_SOURCE 
-    tests/myvector_tests.cpp
-    tests/mylist1_tests.cpp
-    tests/mylist2_tests.cpp
-    tests/additional_tests.cpp
+    tests/container_test.cpp
+    # tests/myvector_tests.cpp
+    # tests/mylist1_tests.cpp
+    # tests/mylist2_tests.cpp
+    # tests/additional_tests.cpp
 )
 
 set(TEST_NAME ${PROJECT_NAME}_test)
