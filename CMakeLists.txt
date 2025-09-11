@@ -43,10 +43,7 @@ add_subdirectory(googletest)
 
 set(TEST_SOURCE 
     tests/container_test.cpp
-    # tests/myvector_tests.cpp
-    # tests/mylist1_tests.cpp
-    # tests/mylist2_tests.cpp
-    # tests/additional_tests.cpp
+    tests/additional_tests.cpp
 )
 
 set(TEST_NAME ${PROJECT_NAME}_test)
@@ -63,7 +60,6 @@ set_target_properties(${TEST_NAME} PROPERTIES
 target_include_directories(${TEST_NAME} PRIVATE ${PROJECT_INCLUDES})
 
 target_link_libraries(${TEST_NAME} PRIVATE 
-    #GTest::gtest
     GTest::gtest_main
     ${LIB_NAME}
 )
