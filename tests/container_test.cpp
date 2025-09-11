@@ -68,7 +68,7 @@ TYPED_TEST(ContainerTest, InsertAtEnd) {
     TypeParam container;
     container.push_back(1);
     container.push_back(2);
-    EXPECT_EQ(container.size(), 2);
+    ASSERT_EQ(container.size(), 2);
     EXPECT_EQ(container[0], 1);
     EXPECT_EQ(container[1], 2);
 }
@@ -76,7 +76,7 @@ TYPED_TEST(ContainerTest, InsertAtEnd) {
 TYPED_TEST(ContainerTest, InsertAtBeginning) {
     TypeParam container{1, 2, 3};
     container.insert(0, 0);
-    EXPECT_EQ(container.size(), 4);
+    ASSERT_EQ(container.size(), 4);
     EXPECT_EQ(container[0], 0);
     EXPECT_EQ(container[1], 1);
 }
@@ -84,7 +84,7 @@ TYPED_TEST(ContainerTest, InsertAtBeginning) {
 TYPED_TEST(ContainerTest, InsertInMiddle) {
     TypeParam container{1, 2, 4, 5};
     container.insert(2, 3);  // Вставляем 3 на позицию с индексом 2
-    EXPECT_EQ(container.size(), 5);
+    ASSERT_EQ(container.size(), 5);
     EXPECT_EQ(container[2], 3);
     EXPECT_EQ(container[3], 4);
 }
@@ -92,7 +92,7 @@ TYPED_TEST(ContainerTest, InsertInMiddle) {
 TYPED_TEST(ContainerTest, EraseFromEnd) {
     TypeParam container{1, 2, 3};
     container.erase(2);  // Удаляем элемент с индексом 2
-    EXPECT_EQ(container.size(), 2);
+    ASSERT_EQ(container.size(), 2);
     EXPECT_EQ(container[0], 1);
     EXPECT_EQ(container[1], 2);
 }
@@ -100,7 +100,7 @@ TYPED_TEST(ContainerTest, EraseFromEnd) {
 TYPED_TEST(ContainerTest, EraseFromBeginning) {
     TypeParam container{1, 2, 3};
     container.erase(0);  // Удаляем элемент с индексом 0
-    EXPECT_EQ(container.size(), 2);
+    ASSERT_EQ(container.size(), 2);
     EXPECT_EQ(container[0], 2);
     EXPECT_EQ(container[1], 3);
 }
@@ -108,7 +108,7 @@ TYPED_TEST(ContainerTest, EraseFromBeginning) {
 TYPED_TEST(ContainerTest, EraseFromMiddle) {
     TypeParam container{1, 2, 3, 4, 5};
     container.erase(2);  // Удаляем элемент с индексом 2
-    EXPECT_EQ(container.size(), 4);
+    ASSERT_EQ(container.size(), 4);
     EXPECT_EQ(container[0], 1);
     EXPECT_EQ(container[1], 2);
     EXPECT_EQ(container[2], 4);
