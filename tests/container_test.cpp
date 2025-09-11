@@ -13,11 +13,56 @@ class ContainerTest : public ::testing::Test {};
 using ContainerTypes = ::testing::Types<MyVector<int>, MyList_1<int>, MyList_2<int>>;
 TYPED_TEST_SUITE(ContainerTest, ContainerTypes);
 
-//- создание контейнера
-TYPED_TEST(ContainerTest, CreateContainer) { 
-    TypeParam container;
-    EXPECT_EQ(container.size(), 0); }
+// Из доработок я бы предложил проверить негативные кейсы добавления / удаления
+// в/из контейнера (например, по индексу, отсутствующему в списке/массиве)
+//- попытка вставки по неверному индексу
+TYPED_TEST(ContainerTest, InsertInvalidIndex) {
+    TypeParam container{1, 2, 3};
+    EXPECT_THROW(container.insert(5, 99), std::out_of_range);
+    EXPECT_THROW(container.insert(-1, 99), std::out_of_range);
+}
 
+//- попытка удаления по неверному индексу
+TYPED_TEST(ContainerTest, EraseInvalidIndex) {
+    TypeParam container{1, 2, 3};
+    EXPECT_THROW(container.erase(5), std::out_of_range);
+    EXPECT_THROW(container.erase(-1), std::out_of_range);
+}
+//- попытка удаления из пустого контейнера
+TYPED_TEST(ContainerTest, EraseFromEmpty) {
+    TypeParam container;
+    EXPECT_THROW(container.erase(0), std::out_of_range);
+}
+//- проверка граничных случаев для insert
+TYPED_TEST(ContainerTest, InsertBoundaryCases) {
+    TypeParam container;
+    // Вставка в пустой контейнер по индексу 0 - должна работать
+    container.insert(0, 1);
+    EXPECT_EQ(container.size(), 1);
+
+    // Вставка по индексу = size() - должна работать (в конец)
+    container.insert(1, 2);
+    EXPECT_EQ(container.size(), 2);
+
+    // Вставка по индексу > size() - должна бросать исключение
+    EXPECT_THROW(container.insert(3, 99), std::out_of_range);
+}
+//- проверка граничных случаев для erase
+TYPED_TEST(ContainerTest, EraseBoundaryCases) {
+    TypeParam container{1, 2, 3};
+    // Удаление последнего элемента - должно работать
+    container.erase(2);
+    EXPECT_EQ(container.size(), 2);
+
+    // Удаление по индексу = size() - должно бросать исключение
+    EXPECT_THROW(container.erase(2), std::out_of_range);
+}
+
+//- создание контейнера
+TYPED_TEST(ContainerTest, CreateContainer) {
+    TypeParam container;
+    EXPECT_EQ(container.size(), 0);
+}
 //- вставка элементов в конец
 TYPED_TEST(ContainerTest, InsertAtEnd) {
     TypeParam container;
@@ -38,7 +83,7 @@ TYPED_TEST(ContainerTest, InsertAtBeginning) {
 //- вставка элементов в середину
 TYPED_TEST(ContainerTest, InsertInMiddle) {
     TypeParam container{1, 2, 4, 5};
-    container.insert(2, 3); // Вставляем 3 на позицию с индексом 2
+    container.insert(2, 3);  // Вставляем 3 на позицию с индексом 2
     EXPECT_EQ(container.size(), 5);
     EXPECT_EQ(container[2], 3);
     EXPECT_EQ(container[3], 4);
@@ -46,7 +91,7 @@ TYPED_TEST(ContainerTest, InsertInMiddle) {
 //- удаление элементов из конца
 TYPED_TEST(ContainerTest, EraseFromEnd) {
     TypeParam container{1, 2, 3};
-    container.erase(2); // Удаляем элемент с индексом 2
+    container.erase(2);  // Удаляем элемент с индексом 2
     EXPECT_EQ(container.size(), 2);
     EXPECT_EQ(container[0], 1);
     EXPECT_EQ(container[1], 2);
@@ -54,7 +99,7 @@ TYPED_TEST(ContainerTest, EraseFromEnd) {
 //- удаление элементов из начала
 TYPED_TEST(ContainerTest, EraseFromBeginning) {
     TypeParam container{1, 2, 3};
-    container.erase(0); // Удаляем элемент с индексом 0
+    container.erase(0);  // Удаляем элемент с индексом 0
     EXPECT_EQ(container.size(), 2);
     EXPECT_EQ(container[0], 2);
     EXPECT_EQ(container[1], 3);
@@ -62,7 +107,7 @@ TYPED_TEST(ContainerTest, EraseFromBeginning) {
 //- удаление элементов из середины
 TYPED_TEST(ContainerTest, EraseFromMiddle) {
     TypeParam container{1, 2, 3, 4, 5};
-    container.erase(2); // Удаляем элемент с индексом 2
+    container.erase(2);  // Удаляем элемент с индексом 2
     EXPECT_EQ(container.size(), 4);
     EXPECT_EQ(container[0], 1);
     EXPECT_EQ(container[1], 2);
@@ -75,7 +120,7 @@ TYPED_TEST(ContainerTest, AccessElements) {
     EXPECT_EQ(container.at(0), 10);
     EXPECT_EQ(container.at(1), 20);
     EXPECT_EQ(container.at(2), 30);
-    EXPECT_THROW(container.at(3), std::out_of_range); // Проверка выхода за границы
+    EXPECT_THROW(container.at(3), std::out_of_range);  // Проверка выхода за границы
 }
 //- получение размера контейнера (фактическое количество элементов)
 TYPED_TEST(ContainerTest, SizeCheck) {
