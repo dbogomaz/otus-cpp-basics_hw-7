@@ -22,47 +22,48 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 )
 
 # ********************** Настройка основного проекта в виде библиотеки *************
-add_library(${PROJECT_NAME}_lib INTERFACE) # INTERFACE потому что шаблонные классы
+set(LIB_NAME ${PROJECT_NAME}_lib)
 
-set_target_properties(${PROJECT_NAME}_lib PROPERTIES
+add_library(${LIB_NAME} INTERFACE) # INTERFACE потому что шаблонные классы
+
+set_target_properties(${LIB_NAME} PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
     CXX_EXTENSIONS OFF
 )
 
 # Настройка include для библиотеки чтобы можно было видеть заголовочные файлы
-target_include_directories(${PROJECT_NAME}_lib INTERFACE ${PROJECT_INCLUDES})
+target_include_directories(${LIB_NAME} INTERFACE ${PROJECT_INCLUDES})
 
 # Линковка библиотеки с основным проектом
-target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_lib)
+target_link_libraries(${PROJECT_NAME} PRIVATE ${LIB_NAME})
 
 # ********************** Подключение GoogleTest **********************
 add_subdirectory(googletest)
 
 set(TEST_SOURCE 
-    tests/myvector_tests.cpp
-    tests/mylist1_tests.cpp
-    tests/mylist2_tests.cpp
+    tests/container_test.cpp
     tests/additional_tests.cpp
 )
 
-add_executable(${PROJECT_NAME}_test ${TEST_SOURCE})
+set(TEST_NAME ${PROJECT_NAME}_test)
 
-set_target_properties(${PROJECT_NAME}_test PROPERTIES
+add_executable(${TEST_NAME} ${TEST_SOURCE})
+
+set_target_properties(${TEST_NAME} PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
     CXX_EXTENSIONS OFF
 )
 
 # Настройка include для тестов чтобы можно было видеть заголовочные файлы
-target_include_directories(${PROJECT_NAME}_test PRIVATE ${PROJECT_INCLUDES})
+target_include_directories(${TEST_NAME} PRIVATE ${PROJECT_INCLUDES})
 
-target_link_libraries(${PROJECT_NAME}_test PRIVATE 
-    #GTest::gtest
+target_link_libraries(${TEST_NAME} PRIVATE 
     GTest::gtest_main
-    ${PROJECT_NAME}_lib
+    ${LIB_NAME}
 )
 
 # Добавление тестов в CMake
 enable_testing()
-add_test(NAME MyContainersTest COMMAND ${PROJECT_NAME}_test)
+add_test(NAME MyContainersTest COMMAND ${TEST_NAME})
